@@ -46,7 +46,3 @@ You may prefer to clone this repo and use it in your project instead using what 
     ```
 
 4. Follow [those steps in the README](https://github.com/couchbaselabs/react-native-couchbase-lite#ios) to add the remaining dependencies for iOS and Android.
-
-5. 
-
-2 todos: change listener code. images not showing in thumbnails. do is for android too. method to specify username/password. method to persist attachment.
