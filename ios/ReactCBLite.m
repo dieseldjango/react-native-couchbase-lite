@@ -44,8 +44,10 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
                          withCBLManager: dbmgr];
 
         NSLog(@"Couchbase Lite listening on port <%@>", listener.URL.port);
-        NSString *extenalUrl = [NSString stringWithFormat:@"http://%@:%@@localhost:%@/", username, password, listener.URL.port];
-        callback(@[extenalUrl, [NSNull null]]);
+        NSString* protocol = sslCert == NULL ? @"http" : @"https";
+        NSString *externalUrl = [NSString stringWithFormat:@"%@://%@:%@@localhost:%@/", protocol, username, password,
+                                listener.URL.port];
+        callback(@[externalUrl, [NSNull null]]);
     } @catch (NSException *e) {
         NSLog(@"Failed to start Couchbase lite: %@", e);
         callback(@[[NSNull null], e.reason]);
