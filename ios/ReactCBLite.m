@@ -27,7 +27,8 @@ RCT_EXPORT_METHOD(init:(RCTResponseSenderBlock)callback)
     [self initWithAuth:username password:password callback:callback];
 }
 
-RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password sslCert:(NSString*)cert
+                  callback:(RCTResponseSenderBlock)callback)
 {
     @try {
         NSLog(@"Launching Couchbase Lite...");
@@ -39,7 +40,7 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
 
         int suggestedPort = 5984;
 
-        listener = [self createListener:suggestedPort withUsername:username withPassword:password withCBLManager: dbmgr];
+        listener = [self createListener:suggestedPort withCert:sslCert withUsername:username withPassword:password withCBLManager: dbmgr];
 
         NSLog(@"Couchbase Lite listening on port <%@>", listener.URL.port);
         NSString *extenalUrl = [NSString stringWithFormat:@"http://%@:%@@localhost:%@/", username, password, listener.URL.port];
@@ -51,6 +52,7 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
 }
 
 - (CBLListener*) createListener: (int) port
+                      withCert: (NSString*) cert
                   withUsername: (NSString *) username
                   withPassword: (NSString *) password
                 withCBLManager: (CBLManager*) cblManager
@@ -62,6 +64,12 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
     NSLog(@"Trying port %d", port);
 
     NSError *err = nil;
+    
+    if (cert != NULL && ![listener setAnonymousSSLIdentityWithLabel: cert error:&err]) {
+        NSLog(@"Could not set SSL certificate %@: %@", cert, err);
+        [NSException raise:@"Could not set SSL certificate" format:@"cert: %@, err: %@", cert, err];
+    }
+    
     BOOL success = [listener start: &err];
 
     if (success) {
@@ -92,6 +100,13 @@ RCT_EXPORT_METHOD(stopListener)
 {
     NSLog(@"Stopping Couchbase Lite listener process");
     [listener stop];
+}
+
+RCT_EXPORT_METHOD(createPushReplication)
+{
+    NSLog(@"Creating push replication");
+    
+    replicator = 
 }
 
 RCT_EXPORT_METHOD(upload:(NSString *)method
