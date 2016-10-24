@@ -24,10 +24,10 @@ RCT_EXPORT_METHOD(init:(RCTResponseSenderBlock)callback)
 {
     NSString* username = [NSString stringWithFormat:@"u%d", arc4random() % 100000000];
     NSString* password = [NSString stringWithFormat:@"p%d", arc4random() % 100000000];
-    [self initWithAuth:username password:password callback:callback];
+    [self initWithAuth:username password:password sslCert:NULL callback:callback];
 }
 
-RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password sslCert:(NSString*)cert
+RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password sslCert:(NSString*)sslCert
                   callback:(RCTResponseSenderBlock)callback)
 {
     @try {
@@ -100,13 +100,6 @@ RCT_EXPORT_METHOD(stopListener)
 {
     NSLog(@"Stopping Couchbase Lite listener process");
     [listener stop];
-}
-
-RCT_EXPORT_METHOD(createPushReplication)
-{
-    NSLog(@"Creating push replication");
-    
-    replicator = 
 }
 
 RCT_EXPORT_METHOD(upload:(NSString *)method
