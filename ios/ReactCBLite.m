@@ -80,7 +80,7 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
 
         port++;
 
-        return [self createListener:port withUsername:username withPassword:password withCBLManager: cblManager];
+        return [self createListener:port withUsername:username withPassword:password withCert:cert withCBLManager: cblManager];
     }
 }
 
