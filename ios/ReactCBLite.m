@@ -52,9 +52,9 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
 }
 
 - (CBLListener*) createListener: (int) port
-                      withCert: (NSString*) cert
                   withUsername: (NSString *) username
                   withPassword: (NSString *) password
+                      withCert: (NSString*) cert
                 withCBLManager: (CBLManager*) cblManager
 {
 
