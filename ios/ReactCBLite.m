@@ -40,7 +40,8 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
 
         int suggestedPort = 5984;
 
-        listener = [self createListener:suggestedPort withCert:sslCert withUsername:username withPassword:password withCBLManager: dbmgr];
+        listener = [self createListener:suggestedPort withUsername:username withPassword:password withCert:sslCert
+                         withCBLManager: dbmgr];
 
         NSLog(@"Couchbase Lite listening on port <%@>", listener.URL.port);
         NSString *extenalUrl = [NSString stringWithFormat:@"http://%@:%@@localhost:%@/", username, password, listener.URL.port];
