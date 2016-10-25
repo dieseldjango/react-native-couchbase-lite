@@ -35,6 +35,9 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
         CBLManager* dbmgr = [CBLManager sharedInstance];
         CBLRegisterJSViewCompiler();
 
+        // TODO remove when done davidj
+        [CBLManager enableLogging: @"SyncVerbose"];
+        
         //register the server with CBL_URLProtocol
         [dbmgr internalURL];
 
