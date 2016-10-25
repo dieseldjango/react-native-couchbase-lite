@@ -37,6 +37,7 @@ RCT_EXPORT_METHOD(initWithAuth:(NSString*)username password:(NSString*)password 
 
         // TODO remove when done davidj
         [CBLManager enableLogging: @"SyncVerbose"];
+        [CBLManager enableLogging: @"ListenerVerbose"];
         
         //register the server with CBL_URLProtocol
         [dbmgr internalURL];
